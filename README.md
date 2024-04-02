@@ -23,9 +23,6 @@ Binge Learn is a revolutionary platform made for students who thrive on video-ba
 4. **Reporting**:
    - Students can report bugs or inappropriate content.
 
-5. **Communication Tools**:
-   - Announcements section for latest updates.
-
 ## 🚀 **Development Timeline**:
 
 - **Day 1**: Setting up a GitHub repository, creating a README and Designing a Logo.
