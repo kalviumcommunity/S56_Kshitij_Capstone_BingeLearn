@@ -27,9 +27,10 @@ app.get('/', (req, res) => {
 
 app.use(Router); 
 if (require.main === module) {
-    app.listen(port, () => {
-      console.log(`🚀 server running on PORT: ${port}`);
-    });
-  }
+  connected();
+  app.listen(port, async () => {
+    console.log(`🚀 server running on PORT: ${port}`);
+  });
+}
   
   module.exports = app;
