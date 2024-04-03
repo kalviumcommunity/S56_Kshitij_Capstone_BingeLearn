@@ -1,17 +1,33 @@
 // Import Statements
 const express = require('express');
 require('dotenv').config()
+const Router = require('./routes')
+const { connected, isConnected } = require('./config/db');
+const cors = require('cors');
 
 // Calling Functions
 const port = process.env.PORT || 3000;
 const app = express();
 
 // use of middlewares
-app.get("/",(req,res) => {
-    res.send("Hello")
-})
+app.use(cors());
+app.use(express.json())
 
+
+
+
+app.get('/', (req, res) => {
+  try {
+    res.json({
+      database: isConnected() ? 'connected' : 'disconnected',
+    });
+  } catch (err) {
+    console.log(err); 
+  }
+});
   
+
+app.use(Router); 
 if (require.main === module) {
     app.listen(port, () => {
       console.log(`🚀 server running on PORT: ${port}`);
