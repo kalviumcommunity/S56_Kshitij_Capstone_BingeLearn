@@ -1,8 +1,9 @@
 // Import Statements
+require('dotenv').config();
 const express = require('express');
-require('dotenv').config()
+const mongoose = require('mongoose');
 const Router = require('./routes')
-const { connected, isConnected } = require('./config/db');
+const { connected, isConnected } = require('./config/db.js');
 const cors = require('cors');
 
 // Calling Functions
@@ -36,5 +37,6 @@ if (require.main === module) {
     console.error('Error occurred:', error);
   }
 }
+
   
   module.exports = app;
