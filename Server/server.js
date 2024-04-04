@@ -2,7 +2,7 @@
 const express = require('express');
 require('dotenv').config()
 const Router = require('./routes')
-const { connected, isConnected } = require('./config/db');
+const { connected, isConnected } = require('./config/db.js');
 const cors = require('cors');
 
 // Calling Functions
