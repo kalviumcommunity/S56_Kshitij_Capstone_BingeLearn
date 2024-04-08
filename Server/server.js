@@ -1,9 +1,8 @@
 // Import Statements
-require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
+require('dotenv').config()
 const Router = require('./routes')
-const { connected, isConnected } = require('./config/db.js');
+const { connected, isConnected } = require('./config/db');
 const cors = require('cors');
 
 // Calling Functions
@@ -27,7 +26,22 @@ app.get('/', (req, res) => {
   
 
 app.use(Router); 
+async function startServer() {
+  try {
+    await connected();
+    app.listen(port, () => {
+      console.log(`🚀 server running on PORT: ${port}`);
+    });
+  } catch (error) {
+    console.error('Error occurred:', error);
+    process.exit(1);
+  }
+}
+
 if (require.main === module) {
+  LoginPage
+  startServer();
+}
   try {
     connected();
     app.listen(port, async () => {
@@ -40,3 +54,4 @@ if (require.main === module) {
 
   
   module.exports = app;
+
