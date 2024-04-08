@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.navbarN{
+    /* border: 2px solid Red; */
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid black;
+}
+
+.logoN {
+    /* border: 2px solid green; */
+    margin: 2vw;
+}
+
+#LogoN{
+    width: 16vw;
+    height: 9vh;
+}
+
+#UserN{
+    width: 3vw;
+    height: 5vh;
+    margin-left: -4vw;
+}
