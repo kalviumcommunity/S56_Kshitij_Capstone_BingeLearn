@@ -26,15 +26,20 @@ app.get('/', (req, res) => {
   
 
 app.use(Router); 
-if (require.main === module) {
+async function startServer() {
   try {
-    connected();
-    app.listen(port, async () => {
+    await connected();
+    app.listen(port, () => {
       console.log(`🚀 server running on PORT: ${port}`);
     });
   } catch (error) {
     console.error('Error occurred:', error);
+    process.exit(1);
   }
 }
-  
-  module.exports = app;
+
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = app;
