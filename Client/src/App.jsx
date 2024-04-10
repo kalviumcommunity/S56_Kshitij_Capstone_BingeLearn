@@ -11,8 +11,8 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        {/* <Route path='/' element={<Navbar/>}/> */}
-        {/* <Route path='/select' element={<Select/>}/> */}
+      <Route path='/' element={<Select/>}/>
+        <Route path='/nav' element={<Navbar/>}/>
         <Route path='/login' element={<Login/>}/>
       </Routes>
     </BrowserRouter>
