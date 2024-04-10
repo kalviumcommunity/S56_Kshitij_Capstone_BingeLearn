@@ -5,9 +5,8 @@ import './Select.css';
 
 const Select = () => {
   return (
-    <div>
-      <Navbar />
-      
+    <>
+      <Navbar/>
       <div className='quoteS'>
         <h1 className="glow-text">"Binge Learn Your Way to Success"</h1>
       </div>
@@ -18,7 +17,7 @@ const Select = () => {
         <button className="button1S glow-on-hover" type="button">I am a Teacher</button>
         <button className="button2S glow-on-hover" type="button">I am a Student</button>
       </div>
-    </div>
+    </>
   );
 };
 

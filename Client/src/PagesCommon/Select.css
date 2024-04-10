@@ -3,12 +3,6 @@
     padding: 0;
 }
 
-body {
-    /* background-image: url('../Images/Background.jpg'); */
-    background-size: cover; 
-    background-repeat: no-repeat; 
-  }
-
 .quoteS {
     border: 2px solid red;
     margin-top: 10vh;
