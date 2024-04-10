@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGooglePlusG, faFacebookF, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import Joi from 'joi'; // Import Joi here
+import Joi from 'joi'; 
 
 const Login = () => {
   const [active, setActive] = useState(false);
@@ -10,6 +10,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const RENDER_LINK = 'https://s56-kshitij-capstone-bingelearn.onrender.com';
 
   const handleRegisterClick = () => {
     setActive(true);
@@ -22,7 +24,7 @@ const Login = () => {
   const validateForm = () => {
     const schema = Joi.object({
       name: Joi.string().required(),
-      email: Joi.string().email({ tlds: { allow: false } }).required(), // Disable TLD validation
+      email: Joi.string().email({ tlds: { allow: false } }).required(), 
       password: Joi.string().min(6).required(),
     });
 
@@ -49,7 +51,7 @@ const Login = () => {
       const trimmedEmail = email.trim();
       const trimmedPassword = password.trim();
 
-      const response = await fetch('https://s56-kshitij-capstone-bingelearn.onrender.com/createUser', {
+      const response = await fetch(`${RENDER_LINK}/createUser`, { // Use the RENDER_LINK constant
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
