@@ -20,9 +20,11 @@ app.get('/', (req, res) => {
       database: isConnected() ? 'connected' : 'disconnected',
     });
   } catch (err) {
-    console.log(err); 
+    console.log(err);
+    res.status(500).send('Failed to check the status of Database');
   }
 });
+
   
 
 app.use(Router); 
