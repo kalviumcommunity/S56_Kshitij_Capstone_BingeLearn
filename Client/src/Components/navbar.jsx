@@ -11,7 +11,7 @@ const Navbar = () => {
           <img id="LogoN" src={logo3} alt="Logo" /> 
         </div>
         <div className='userImgN'>
-        <img id="UserN" src={user} alt="User" /> 
+        {/* <img id="UserN" src={user} alt="User" />  */}
         </div>
       </div>
     </div>
