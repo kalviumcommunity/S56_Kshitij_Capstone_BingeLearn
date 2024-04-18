@@ -11,7 +11,7 @@ const PublishCourse = () => {
           <div className="upperLeftBoxP">
             <div className="upperUpperBoxP">
               {/* <input type="text" placeholder="Enter the Name of Your Course"/> */}
-              <input type="text" name="text" class="input" placeholder="Name of the Course"></input>
+              <input type="text" name="text" className="input" placeholder="Name of the Course"></input>
             </div>
             <div className="upperLowerBoxP">
             <div className="wrapper">
