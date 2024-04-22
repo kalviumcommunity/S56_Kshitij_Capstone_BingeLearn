@@ -57,39 +57,55 @@ const Login = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) {
       return;
     }
-
+  
     try {
-      const response = await fetch(`${RENDER_LINK}/createUser`, {
+      // Retrieve the user type from session storage
+      const userType = sessionStorage.getItem('userType');
+  
+      let url = '';
+  
+      // Determine the URL based on the user type
+      if (userType === 'teacher') {
+        url = `${RENDER_LINK}/createTeacher`;
+      } else if (userType === 'student') {
+        url = `${RENDER_LINK}/createUser`;
+      } else {
+        setError('Invalid user type');
+        return;
+      }
+  
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name, email, password }),
       });
-
+  
       if (response.ok) {
         const userData = await response.json();
         setSuccessMessage('User created successfully. Please login.');
         setName('');
         setEmail('');
-        setPassword(''); // Clearing the  password after successful registration
+        setPassword('');
         setError('');
-        setActive(false);  // Switch to the login form after successful signup
+        setActive(false);
       } else {
         const errorData = await response.json();
         setError(errorData.error);
-        setPassword(''); 
+        setPassword('');
       }
     } catch (error) {
       console.error('Error creating user:', error);
       setError('Failed to create user. Please try again.');
-      setPassword(''); 
+      setPassword('');
     }
   };
+  
 
   const handleSignIn = async (e) => {
     e.preventDefault();
