@@ -1,7 +1,7 @@
 // Import necessary modules
 const express = require('express');
 const router = express.Router();
-const { UserModal, TeacherModal } = require('./models/BD'); // Assuming you have UserModal and TeacherModal defined in your models/BD file
+const { UserModal, TeachersModal } = require('./models/BD'); 
 const bcrypt = require('bcryptjs');
 
 // Route for user sign Up
@@ -30,7 +30,7 @@ router.post("/createUser", async (req, res) => {
 router.post("/createTeacher", async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const existingTeacher = await TeacherModal.findOne({ email });
+    const existingTeacher = await TeachersModal.findOne({ email });
     if (existingTeacher) {
       return res.status(400).json({ error: 'Email already exists' });
     }
@@ -39,7 +39,7 @@ router.post("/createTeacher", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newTeacher = new TeacherModal({ name, email, password: hashedPassword });
+    const newTeacher = new TeachersModal({ name, email, password: hashedPassword });
     await newTeacher.save();
     res.status(201).json({ message: "Teacher created successfully", teacher: { name: newTeacher.name, email: newTeacher.email } });
   } catch (error) {
@@ -74,7 +74,7 @@ router.post("/loginUser", async (req, res) => {
 router.post("/loginTeacher", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const teacher = await TeacherModal.findOne({ email });
+    const teacher = await TeachersModal.findOne({ email });
     if (!teacher) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
