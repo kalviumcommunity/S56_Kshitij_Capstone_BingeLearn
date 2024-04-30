@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import './App.css'
-import Navbar from './Components/Navbar.jsx';
+import Navbar from './Components/navbar.jsx';
 import Select from './PagesCommon/Select';
 import Login from './PagesCommon/Login';
 import Navigation from './PagesTeach/Navigation';
