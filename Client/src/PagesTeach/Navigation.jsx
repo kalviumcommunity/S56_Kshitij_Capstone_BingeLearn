@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import Navbar from '../Components/Navbar';
 import Frame from '../Images/Frame.png'
 import "../PagesTeach/Navigation.css";
@@ -15,7 +16,7 @@ const Navigation = () => {
       <div className="partitionNavigation">
       <div className="allButtonsN">
         <div className="wrapper">
-          <a className="cta" href="#">
+          <Link className="cta" to="/publish">
             <span>List My course</span>
             <span>
               <svg
@@ -29,9 +30,9 @@ const Navigation = () => {
                 <g
                   id="arrow"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 >
                   <path
                     className="one"
@@ -51,7 +52,7 @@ const Navigation = () => {
                 </g>
               </svg>
             </span>
-          </a>
+            </Link>
         </div>
         <div className="wrapper">
           <a className="cta" href="#">
@@ -68,9 +69,9 @@ const Navigation = () => {
                 <g
                   id="arrow"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 >
                   <path
                     className="one"
@@ -107,9 +108,9 @@ const Navigation = () => {
                 <g
                   id="arrow"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 >
                   <path
                     className="one"
@@ -146,9 +147,9 @@ const Navigation = () => {
                 <g
                   id="arrow"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 >
                   <path
                     className="one"

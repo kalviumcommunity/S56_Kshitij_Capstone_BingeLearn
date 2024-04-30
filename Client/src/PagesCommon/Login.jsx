@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGooglePlusG, faFacebookF, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import Joi from 'joi'; 
+import Joi from 'joi';
+import Navigation from '../PagesTeach/Navigation'; 
 
 const Login = () => {
   const [active, setActive] = useState(false);
@@ -11,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const RENDER_LINK = 'https://s56-kshitij-capstone-bingelearn.onrender.com';
 
@@ -25,12 +27,13 @@ const Login = () => {
     setError('');
     setSuccessMessage('');
   };
+
   const validateForm = () => {
     const schema = Joi.object({
       name: Joi.string().required(),
       email: Joi.string().email({ tlds: { allow: false } }).required(),
       password: Joi.string()
-        .min(8) // Minimum password length should be 8
+        .min(8)
         .pattern(new RegExp('^(?=.*[0-9])')).message('Password must include at least one number.')
         .pattern(new RegExp('^(?=.*[a-zA-Z])')).message('Password must include at least one letter.')
         .required()
@@ -40,20 +43,17 @@ const Login = () => {
           'any.required': 'Password is required.'
         })
     });
-  
+
     const { error } = schema.validate({ name, email, password }, { abortEarly: false });
     if (error) {
       const errorMessage = error.details.map(detail => detail.message).join('. ');
       setError(errorMessage);
-      setPassword(''); // Clearing password on failure of validation 
+      setPassword('');
       return false;
     }
-  
+
     return true;
   };
-  
-  
-
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -63,7 +63,19 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch(`${RENDER_LINK}/createUser`, {
+      const userType = sessionStorage.getItem('userType');
+      let url = '';
+
+      if (userType === 'teacher') {
+        url = `${RENDER_LINK}/createTeacher`;
+      } else if (userType === 'student') {
+        url = `${RENDER_LINK}/createUser`;
+      } else {
+        setError('Invalid user type');
+        return;
+      }
+
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,18 +88,18 @@ const Login = () => {
         setSuccessMessage('User created successfully. Please login.');
         setName('');
         setEmail('');
-        setPassword(''); // Clearing the  password after successful registration
+        setPassword('');
         setError('');
-        setActive(false);  // Switch to the login form after successful signup
+        setActive(false);
       } else {
         const errorData = await response.json();
         setError(errorData.error);
-        setPassword(''); 
+        setPassword('');
       }
     } catch (error) {
       console.error('Error creating user:', error);
       setError('Failed to create user. Please try again.');
-      setPassword(''); 
+      setPassword('');
     }
   };
 
@@ -101,7 +113,19 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch(`${RENDER_LINK}/loginUser`, {
+      const userType = sessionStorage.getItem('userType');
+      let url = '';
+
+      if (userType === 'teacher') {
+        url = `${RENDER_LINK}/loginTeacher`;
+      } else if (userType === 'student') {
+        url = `${RENDER_LINK}/loginUser`;
+      } else {
+        setError('Invalid user type');
+        return;
+      }
+
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -113,12 +137,13 @@ const Login = () => {
         const userData = await response.json();
         setSuccessMessage('Login successful.');
         setEmail('');
-        setPassword('')
+        setPassword('');
         setError('');
+        setIsLoggedIn(true); // Set isLoggedIn to true upon successful login
       } else {
         const errorData = await response.json();
         setError(errorData.error);
-        setPassword(''); 
+        setPassword('');
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -126,6 +151,11 @@ const Login = () => {
       setPassword('');
     }
   };
+
+  // Redirect to Navigation component if isLoggedIn is true
+  if (isLoggedIn) {
+    return <Navigation />;
+  }
 
   return (
     <div className="center-align">

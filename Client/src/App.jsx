@@ -1,9 +1,11 @@
 import {useState} from 'react'
 import './App.css'
 import Navbar from './Components/Navbar.jsx';
+import Navbar2 from './Components/Navbar2.jsx'
 import Select from './PagesCommon/Select';
 import Login from './PagesCommon/Login';
 import Navigation from './PagesTeach/Navigation';
+import PublishCourse from './PagesTeach/PublishCourse';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,8 +16,10 @@ function App() {
       <Routes>
       <Route path='/' element={<Select/>}/>
         <Route path='/nav' element={<Navbar/>}/>
+        <Route path='/nav2' element={<Navbar2/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/navigation' element={<Navigation/>}/>
+        <Route path='/publish' element={<PublishCourse/>}/>
       </Routes>
     </BrowserRouter>
     </>
