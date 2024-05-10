@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { UserModal, TeachersModal } = require('./models/BD'); 
 const bcrypt = require('bcryptjs');
+const cloudinary = require('./utils/cloudinary');
+const upload=require("./multer");
 
 // Route for user sign Up
 router.post("/createUser", async (req, res) => {
@@ -92,4 +94,25 @@ router.post("/loginTeacher", async (req, res) => {
   }
 });
 
-module.exports = router;
+
+// Upload Route
+router.post('/upload', upload.single('image'), function (req, res) {
+  console.log("Uploaded file:", req.file);
+  cloudinary.uploader.upload(req.file.path, function (err, result) {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        success: false,
+        message: "Error"
+      });
+    }
+    console.log(result)
+    res.status(200).json({
+      success: true,
+      message: "Uploaded!",
+      data: result
+    });
+  });
+});
+
+module.exports = {router}

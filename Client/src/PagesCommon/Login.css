@@ -9,7 +9,7 @@
 
 .center-align{
     background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background: linear-gradient(to right, #e2e2e2, #a64c76);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +20,7 @@
 
 .container{
     background-color: #fff;
-    border-radius: 30px;
+    border-radius: 3px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     overflow: hidden;
@@ -48,11 +48,13 @@
 }
 
 .container button{
-    background-color: #512da8;
-    color: #fff;
+    border-style: none;
+    background-color: white;
+    border: 2px solid black;
+    color: black;
     font-size: 12px;
     padding: 10px 45px;
-    border: 1px solid transparent;
+    /* border: 1px solid transparent; */
     border-radius: 8px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -62,8 +64,8 @@
 }
 
 .container button.hidden{
-    background-color: transparent;
     border-color: #fff;
+    border: 2px solid black;
 }
 
 .container form{
@@ -152,19 +154,19 @@
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
+    border-radius: 0px 0 0 0px;
     z-index: 1000;
 }
 
 .container.active .toggle-container{
     transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
+    border-radius: 0 0px 0px 0;
 }
 
 .toggle{
-    background-color: #512da8;
+    background-color: #000000;
     height: 100%;
-    background: linear-gradient(to right, #5c6bc0, #512da8);
+    background: linear-gradient(to right, #802222, #6d027b);
     color: #fff;
     position: relative;
     left: -100%;

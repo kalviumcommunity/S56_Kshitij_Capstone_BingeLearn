@@ -3,7 +3,7 @@
     width: 100vw;
     height: auto;
     background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background: linear-gradient(to right, #e2e2e2, #a64c76);
 }
 
 .upperBoxP{
@@ -152,3 +152,6 @@
     align-items: center;
 }
    
+.thumbnailtextP{
+  margin-top: -7vh;
+}

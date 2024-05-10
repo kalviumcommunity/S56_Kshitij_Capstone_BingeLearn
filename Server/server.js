@@ -1,7 +1,7 @@
 // Import Statements
 const express = require('express');
 require('dotenv').config()
-const Router = require('./routes')
+const {router} = require('./routes')
 const { connected, isConnected } = require('./config/db');
 const cors = require('cors');
 
@@ -10,8 +10,10 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 // use of middlewares
+app.use(router);
 app.use(cors());
 app.use(express.json())
+
 
 
 app.get('/', (req, res) => {
@@ -27,7 +29,6 @@ app.get('/', (req, res) => {
 
   
 
-app.use(Router); 
 async function startServer() {
   try {
     await connected();
