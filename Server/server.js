@@ -1,9 +1,17 @@
 // Import Statements
 const express = require('express');
 require('dotenv').config()
-const {router} = require('./routes')
+const { router } = require('./routes');
 const { connected, isConnected } = require('./config/db');
 const cors = require('cors');
+const cloudinary = require('cloudinary').v2; // Import Cloudinary library
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // Calling Functions
 const port = process.env.PORT || 3000;
@@ -12,9 +20,7 @@ const app = express();
 // use of middlewares
 app.use(router);
 app.use(cors());
-app.use(express.json())
-
-
+app.use(express.json());
 
 app.get('/', (req, res) => {
   try {
@@ -27,7 +33,16 @@ app.get('/', (req, res) => {
   }
 });
 
-  
+// Middleware to handle Cloudinary upload errors
+app.use((err, req, res, next) => {
+  if (err instanceof cloudinary.CloudinaryError) {
+    // Handled Cloudinary errors specifically after review. 
+    console.error('Cloudinary Error :', err);
+    res.status(500).send('Failed to upload file to Cloudinary');
+  } else {
+    next(err); 
+  }
+});
 
 async function startServer() {
   try {

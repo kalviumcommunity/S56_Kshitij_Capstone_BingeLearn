@@ -94,9 +94,16 @@ router.post("/loginTeacher", async (req, res) => {
   }
 });
 
-
 // Upload Route
 router.post('/upload', upload.single('image'), function (req, res) {
+  // Check if req.file is undefined
+  if (!req.file) {
+    return res.status(400).json({
+      success: false,
+      message: "No file uploaded"
+    });
+  }
+
   console.log("Uploaded file:", req.file);
   cloudinary.uploader.upload(req.file.path, function (err, result) {
     if (err) {
