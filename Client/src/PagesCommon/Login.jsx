@@ -166,9 +166,9 @@ const Login = () => {
             <h1>Create Account</h1>
             <div className="social-icons">
               <a href="#" className="icon"><FontAwesomeIcon icon={faGooglePlusG} /></a>
-              <a href="#" className="icon"><FontAwesomeIcon icon={faFacebookF} /></a>
-              <a href="#" className="icon"><FontAwesomeIcon icon={faGithub} /></a>
-              <a href="#" className="icon"><FontAwesomeIcon icon={faLinkedinIn} /></a>
+              {/* <a href="#" className="icon"><FontAwesomeIcon icon={faFacebookF} /></a> */}
+              {/* <a href="#" className="icon"><FontAwesomeIcon icon={faGithub} /></a> */}
+              {/* <a href="#" className="icon"><FontAwesomeIcon icon={faLinkedinIn} /></a> */}
             </div>
             <span>or use your email for registration</span>
             <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
@@ -185,9 +185,9 @@ const Login = () => {
             <h1>Sign In</h1>
             <div className="social-icons">
               <a href="#" className="icon"><FontAwesomeIcon icon={faGooglePlusG} /></a>
-              <a href="#" className="icon"><FontAwesomeIcon icon={faFacebookF} /></a>
-              <a href="#" className="icon"><FontAwesomeIcon icon={faGithub} /></a>
-              <a href="#" className="icon"><FontAwesomeIcon icon={faLinkedinIn} /></a>
+              {/* <a href="#" className="icon"><FontAwesomeIcon icon={faFacebookF} /></a> */}
+              {/* <a href="#" className="icon"><FontAwesomeIcon icon={faGithub} /></a> */}
+              {/* <a href="#" className="icon"><FontAwesomeIcon icon={faLinkedinIn} /></a> */}
             </div>
             <span>or use your email and password</span>
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
