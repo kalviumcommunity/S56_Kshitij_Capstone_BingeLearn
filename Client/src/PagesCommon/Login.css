@@ -211,3 +211,17 @@
 .container.active .toggle-right{
     transform: translateX(200%);
 }
+
+/* New error message style */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* New success message style */
+.success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+}

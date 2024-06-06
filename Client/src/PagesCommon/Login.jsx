@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGooglePlusG, faFacebookF, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
 import Joi from 'joi';
-import Navigation from '../PagesTeach/Navigation'; 
+import Navigation from '../PagesTeach/Navigation';
+import Loader from '../Components/Loader'; 
 
 const Login = () => {
   const [active, setActive] = useState(false);
@@ -13,6 +14,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false); 
 
   const RENDER_LINK = 'https://s56-kshitij-capstone-bingelearn.onrender.com';
 
@@ -62,6 +64,8 @@ const Login = () => {
       return;
     }
 
+    setLoading(true); // Set loading to true before the request
+
     try {
       const userType = sessionStorage.getItem('userType');
       let url = '';
@@ -72,6 +76,7 @@ const Login = () => {
         url = `${RENDER_LINK}/createUser`;
       } else {
         setError('Invalid user type');
+        setLoading(false); // Set loading to false in case of error
         return;
       }
 
@@ -100,6 +105,8 @@ const Login = () => {
       console.error('Error creating user:', error);
       setError('Failed to create user. Please try again.');
       setPassword('');
+    } finally {
+      setLoading(false); // Set loading to false after the request
     }
   };
 
@@ -112,6 +119,8 @@ const Login = () => {
       return;
     }
 
+    setLoading(true); // Set loading to true before the request
+
     try {
       const userType = sessionStorage.getItem('userType');
       let url = '';
@@ -122,6 +131,7 @@ const Login = () => {
         url = `${RENDER_LINK}/loginUser`;
       } else {
         setError('Invalid user type');
+        setLoading(false); // Set loading to false in case of error
         return;
       }
 
@@ -149,6 +159,8 @@ const Login = () => {
       console.error('Error logging in:', error);
       setError('Failed to log in. Please try again.');
       setPassword('');
+    } finally {
+      setLoading(false); // Set loading to false after the request
     }
   };
 
@@ -159,6 +171,7 @@ const Login = () => {
 
   return (
     <div className="center-align">
+      {loading && <Loader />} {/* Show loader when loading is true */}
       <div className={`container ${active ? 'active' : ''}`}>
         {/* Sign-up form */}
         <div className="form-container sign-up">
