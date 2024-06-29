@@ -1,10 +1,15 @@
 // Import necessary modules
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const { UserModal, TeachersModal } = require('./models/BD'); 
 const bcrypt = require('bcryptjs');
 const cloudinary = require('./utils/cloudinary');
-const upload=require("./multer");
+const upload = require("./multer");
+const jwt = require('jsonwebtoken');
+
+// Secret key for signing JWT from environment variable
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Route for user sign Up
 router.post("/createUser", async (req, res) => {
@@ -65,6 +70,12 @@ router.post("/loginUser", async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
+    // Generate JWT
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+
+    // Set JWT as HttpOnly cookie
+    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+
     res.json({ message: "Login successful", user: { name: user.name, email: user.email } });
   } catch (error) {
     console.error(error);
@@ -86,6 +97,12 @@ router.post("/loginTeacher", async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
+
+    // Generate JWT
+    const token = jwt.sign({ teacherId: teacher._id }, JWT_SECRET, { expiresIn: '1h' });
+
+    // Set JWT as HttpOnly cookie
+    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
 
     res.json({ message: "Login successful", teacher: { name: teacher.name, email: teacher.email } });
   } catch (error) {
@@ -122,4 +139,4 @@ router.post('/upload', upload.single('image'), function (req, res) {
   });
 });
 
-module.exports = {router}
+module.exports = { router };
