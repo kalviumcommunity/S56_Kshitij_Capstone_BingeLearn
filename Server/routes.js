@@ -4,7 +4,11 @@ const router = express.Router();
 const { UserModal, TeachersModal } = require('./models/BD'); 
 const bcrypt = require('bcryptjs');
 const cloudinary = require('./utils/cloudinary');
-const upload=require("./multer");
+const upload = require("./multer");
+const jwt = require('jsonwebtoken');
+
+// Secret key for signing JWT
+const JWT_SECRET = 'your_jwt_secret_key';
 
 // Route for user sign Up
 router.post("/createUser", async (req, res) => {
@@ -65,7 +69,10 @@ router.post("/loginUser", async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    res.json({ message: "Login successful", user: { name: user.name, email: user.email } });
+    // Generate JWT
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({ message: "Login successful", token, user: { name: user.name, email: user.email } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error during login' });
@@ -87,7 +94,10 @@ router.post("/loginTeacher", async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    res.json({ message: "Login successful", teacher: { name: teacher.name, email: teacher.email } });
+    // Generate JWT
+    const token = jwt.sign({ teacherId: teacher._id }, JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({ message: "Login successful", token, teacher: { name: teacher.name, email: teacher.email } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error during login' });
@@ -122,4 +132,4 @@ router.post('/upload', upload.single('image'), function (req, res) {
   });
 });
 
-module.exports = {router}
+module.exports = { router }

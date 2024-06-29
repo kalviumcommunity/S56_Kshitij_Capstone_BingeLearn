@@ -149,6 +149,7 @@ const Login = () => {
         setEmail('');
         setPassword('');
         setError('');
+        sessionStorage.setItem('token', userData.token); // Save JWT token to sessionStorage
         setIsLoggedIn(true); // Set isLoggedIn to true upon successful login
       } else {
         const errorData = await response.json();
