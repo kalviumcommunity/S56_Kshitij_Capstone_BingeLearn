@@ -1,4 +1,5 @@
 // Import necessary modules
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const { UserModal, TeachersModal } = require('./models/BD'); 
@@ -7,8 +8,8 @@ const cloudinary = require('./utils/cloudinary');
 const upload = require("./multer");
 const jwt = require('jsonwebtoken');
 
-// Secret key for signing JWT
-const JWT_SECRET = 'your_jwt_secret_key';
+// Secret key for signing JWT from environment variable
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Route for user sign Up
 router.post("/createUser", async (req, res) => {
@@ -72,7 +73,10 @@ router.post("/loginUser", async (req, res) => {
     // Generate JWT
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ message: "Login successful", token, user: { name: user.name, email: user.email } });
+    // Set JWT as HttpOnly cookie
+    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+
+    res.json({ message: "Login successful", user: { name: user.name, email: user.email } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error during login' });
@@ -97,7 +101,10 @@ router.post("/loginTeacher", async (req, res) => {
     // Generate JWT
     const token = jwt.sign({ teacherId: teacher._id }, JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ message: "Login successful", token, teacher: { name: teacher.name, email: teacher.email } });
+    // Set JWT as HttpOnly cookie
+    res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+
+    res.json({ message: "Login successful", teacher: { name: teacher.name, email: teacher.email } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error during login' });
@@ -132,4 +139,4 @@ router.post('/upload', upload.single('image'), function (req, res) {
   });
 });
 
-module.exports = { router }
+module.exports = { router };
