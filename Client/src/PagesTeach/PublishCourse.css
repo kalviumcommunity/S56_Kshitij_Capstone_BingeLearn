@@ -13,6 +13,11 @@
     display: flex;
 }
 
+/* .upperUpperBoxP{
+  display: flex;
+  justify-content: space-around;
+} */
+
 .lowerBoxP{
     border-top: 5px solid black;
     width: 100vw;
@@ -97,8 +102,9 @@
 .upperUpperBoxP{
     /* border: 2px solid red; */
     height: 25vh;
+    width: 55vw;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -110,31 +116,34 @@
     align-items: center;
   }
 
-  .input {
-    background-color: #383838;
-    border: 1ex solid none;
-    border-top-width: 1.7em;
-    color: #383838;
-    word-wrap: break-word;
-    outline: 5px solid #383838;
-    height: 6vh;
-    width: 30vw;
-    font-size: 23px;
-    text-align: center;
-    transition: all 0.7s;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
-   }
-   
-   .input:hover {
-    border-top-width: 0.1em;
-    background-color: #f1e8e8;
-   }
-   
-   .input:focus {
-    border-top-width: 0.1em;
-    background-color: #f1e8e8;
-   }
+  .inputBoxP {
+    --input-focus: #2d8cf0;
+    --font-color: #323232;
+    --font-color-sub: #666;
+    --bg-color: #fff;
+    --main-color: #323232;
+    width: 450px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--font-color);
+    padding: 5px 10px;
+    outline: none;
+  }
+  
+  .inputBoxP::placeholder {
+    color: var(--font-color-sub);
+    opacity: 0.8;
+  }
+  
+  .inputBoxP:focus {
+    border: 2px solid var(--input-focus);
+  }
+
 .VideoHeadingP{
     border-bottom: 5px solid black;
     height: 5vh;
@@ -154,4 +163,22 @@
    
 .thumbnailtextP{
   margin-top: -7vh;
+}
+
+.saveButtonP {
+  --input-focus: #2d8cf0;
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: #fff;
+  --main-color: #323232;
+  width: 10vw;
+  height: 6vh;
+  border-radius: 5px;
+  border: 2px solid #323232;
+  background-color: #323232;
+  box-shadow: 4px 4px white;
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
 }
