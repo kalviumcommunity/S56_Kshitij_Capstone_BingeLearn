@@ -6,6 +6,7 @@ import Select from './PagesCommon/Select';
 import Login from './PagesCommon/Login';
 import Navigation from './PagesTeach/Navigation';
 import PublishCourse from './PagesTeach/PublishCourse';
+import VideoUpload from './PagesTeach/VideoUpload';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login' element={<Login/>}/>
         <Route path='/navigation' element={<Navigation/>}/>
         <Route path='/publish' element={<PublishCourse/>}/>
+        <Route path='/vidupload' element={<VideoUpload/>}/>
       </Routes>
     </BrowserRouter>
     </>

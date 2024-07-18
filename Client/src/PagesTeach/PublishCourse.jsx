@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import Navbar2 from "../Components/Navbar2";
 import "../PagesTeach/PublishCourse.css";
+
 
 const PublishCourse = () => {
   const [thumbnailUploaded, setThumbnailUploaded] = useState(false);
@@ -34,12 +36,12 @@ const PublishCourse = () => {
         <div className="upperBoxP">
           <div className="upperLeftBoxP">
             <div className="upperUpperBoxP">
-              {/* <input type="text" placeholder="Enter the Name of Your Course"/> */}
-              <input type="text" name="text" className="input" placeholder="Name of the Course"></input>
+              <input type="text" className="inputBoxP" placeholder="Name of the Course"></input>
+              <button className="saveButtonP">Save Course Name</button>
             </div>
             <div className="upperLowerBoxP">
             <div className="wrapper">
-          <a className="cta" href="#">
+          <Link className="cta" to="/vidupload">
             <span>Upload Video</span>
             <span>
               <svg
@@ -75,7 +77,7 @@ const PublishCourse = () => {
                 </g>
               </svg>
             </span>
-          </a>
+          </Link>
         </div>
         <div className="wrapper">
           <a className="cta" href="#">
