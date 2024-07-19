@@ -112,31 +112,24 @@ router.post("/loginTeacher", async (req, res) => {
 });
 
 // Upload Route
-router.post('/upload', upload.single('image'), function (req, res) {
-  // Check if req.file is undefined
-  if (!req.file) {
-    return res.status(400).json({
-      success: false,
-      message: "No file uploaded"
-    });
-  }
-
-  console.log("Uploaded file:", req.file);
-  cloudinary.uploader.upload(req.file.path, function (err, result) {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({
-        success: false,
-        message: "Error"
+router.post('/upload', upload.single('image'), async (req, res) => {
+  try {
+      console.log(req.file);  
+      const result = await cloudinary.uploader.upload(req.file.path, {
+          resource_type: "image"
       });
-    }
-    console.log(result)
-    res.status(200).json({
-      success: true,
-      message: "Uploaded!",
-      data: result
-    });
-  });
+
+      res.status(200).json({
+          message: 'Image uploaded successfully',
+          imageUrl: result.secure_url
+      });
+  } catch (error) {
+      console.error('Error uploading image:', error);
+      res.status(500).json({
+          message: 'Error uploading image',
+          error: error.message
+      });
+  }
 });
 
 module.exports = { router };
