@@ -33,4 +33,8 @@ Binge Learn empowers students and educators at the same time, ensuring a secure 
 
 ---
 
+## Frontend Deployed Link - https://bingelearn.netlify.app/
+
+---
+
 In case of any quesries or support, contact me at [kotechakshitij@gmail.com](mailto:kotechakshitij@gmail.com). Follow me on [LinkedIn](https://www.linkedin.com/in/kshitij-kotecha-66a0231a2/) for updates! 📚🚀
