@@ -57,17 +57,7 @@ async function startServer() {
 }
 
 if (require.main === module) {
-  LoginPage
   startServer();
 }
-  try {
-    connected();
-    app.listen(port, async () => {
-      console.log(`🚀 server running on PORT: ${port}`);
-    });
-  } catch (error) {
-    console.error('Error occurred:', error);
-  }
-  
-module.exports = app;
 
+module.exports = app;
