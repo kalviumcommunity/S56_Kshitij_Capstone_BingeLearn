@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
   }
 });
 
-// Middleware to handle Cloudinary upload errors
+// Middleware to handle Cloudinary upload error
 app.use((err, req, res, next) => {
   if (err instanceof cloudinary.CloudinaryError) {
     // Handle Cloudinary errors specifically after review.
