@@ -55,7 +55,6 @@ router.post("/createTeacher", async (req, res) => {
   }
 });
 
-// Route for user login
 router.post("/loginUser", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -73,8 +72,9 @@ router.post("/loginUser", async (req, res) => {
     // Generate JWT
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
-    // Set JWT as HttpOnly cookie
+    // Set JWT and email as HttpOnly cookies
     res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    res.cookie('email', user.email, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
 
     res.json({ message: "Login successful", user: { name: user.name, email: user.email } });
   } catch (error) {
@@ -92,7 +92,7 @@ router.post("/loginTeacher", async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // Comparing hashed password with the password provided by teacher.
+    // Comparing hashed password with the password provided by the teacher
     const isMatch = await bcrypt.compare(password, teacher.password);
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password' });
@@ -101,8 +101,9 @@ router.post("/loginTeacher", async (req, res) => {
     // Generate JWT
     const token = jwt.sign({ teacherId: teacher._id }, JWT_SECRET, { expiresIn: '1h' });
 
-    // Set JWT as HttpOnly cookie
+    // Set JWT and email as HttpOnly cookies
     res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    res.cookie('email', teacher.email, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
 
     res.json({ message: "Login successful", teacher: { name: teacher.name, email: teacher.email } });
   } catch (error) {

@@ -150,6 +150,13 @@ const Login = () => {
         setPassword('');
         setError('');
         setIsLoggedIn(true); // Set isLoggedIn to true upon successful login
+
+        // Store email in session storage based on user type
+        if (userType === 'teacher') {
+          sessionStorage.setItem('teacherEmail', email);
+        } else if (userType === 'student') {
+          sessionStorage.setItem('studentEmail', email);
+        }
       } else {
         const errorData = await response.json();
         setError(errorData.error);

@@ -43,19 +43,19 @@
 
 .lowerLeftBoxP{
     /* border: 2px solid lightblue; */
-    width: 50vw;
+    width: 100vw;
     height: 40vh;
     display: flex;
     justify-content: center;
 }
 
-.lowerRightBoxP{
-    border-left: 5px solid black;
+/* .lowerRightBoxP{
+    border-left: 15px solid black;
     width: 50vw;
     height: 40vh;
     display: flex;
     justify-content: center;
-}
+} */
 
 .file-upload-form {
     width: fit-content;
@@ -147,7 +147,7 @@
 .VideoHeadingP{
     border-bottom: 5px solid black;
     height: 5vh;
-    width: 50vw;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
