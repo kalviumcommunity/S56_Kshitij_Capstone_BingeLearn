@@ -79,7 +79,7 @@ const PublishCourse = () => {
             </span>
           </Link>
         </div>
-        <div className="wrapper">
+        {/* <div className="wrapper">
           <a className="cta" href="#">
             <span>Assignment Upload</span>
             <span>
@@ -117,7 +117,7 @@ const PublishCourse = () => {
               </svg>
             </span>
           </a>
-        </div>
+        </div> */}
             </div>
           </div>
           {!thumbnailUploaded && (
