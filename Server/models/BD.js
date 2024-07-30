@@ -6,12 +6,25 @@ const UserSchema = mongoose.Schema({
     password: String
 });
 
-const TeachersSchema = mongoose.Schema({
+const VideoSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    link: { type: String, required: true },
+    duration: { type: String, required: true },
+  });
+
+  const CourseSchema = new mongoose.Schema({
+    courseName: { type: String, required: true },
+    videos: [VideoSchema],
+  });
+
+  
+
+  const TeachersSchema = mongoose.Schema({
     name: String,
-    email: { type: String, required: true, unique: true},
+    email: { type: String, required: true, unique: true },
     password: String,
-    courseName: { type: String, required: false }
-})
+    courses: [CourseSchema]
+  });
 
 
 const UserModal = mongoose.model("users-coll", UserSchema)

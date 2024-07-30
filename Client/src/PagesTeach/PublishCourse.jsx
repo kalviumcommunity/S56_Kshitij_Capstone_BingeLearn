@@ -44,6 +44,7 @@ const PublishCourse = () => {
         courseName: courseName,
       });
       console.log(response.data.message);
+      sessionStorage.setItem('courseName', courseName);
     } catch (error) {
       console.error('Error saving course name', error);
     }
