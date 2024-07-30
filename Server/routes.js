@@ -132,6 +132,37 @@ router.post('/savecourse', async (req, res) => {
   }
 });
 
+router.post('/savevideo', async (req, res) => {
+  const { email, courseName, video } = req.body;
+
+  try {
+    const teacher = await TeachersModal.findOne({ email: email });
+
+    if (teacher) {
+      const course = teacher.courses.find(course => course.courseName === courseName);
+
+      if (course) {
+        const duplicateVideo = course.videos.find(v => v.name === video.name);
+        if (duplicateVideo) {
+          return res.status(400).json({ message: 'Video with the same name already exists!' });
+        }
+        course.videos.push(video);
+      } else {
+        // Create new course if it doesn't exist
+        teacher.courses.push({ courseName, videos: [video] });
+      }
+
+      await teacher.save();
+      res.status(200).json({ message: 'Video details saved successfully!' });
+    } else {
+      res.status(404).json({ message: 'Teacher not found!' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+    console.log(error);
+  }
+});
+
 // Upload Route
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
