@@ -164,7 +164,7 @@ router.post('/savevideo', async (req, res) => {
 });
 
 // Getting video details
-app.get('/videos', async (req, res) => {
+router.get('/videos', async (req, res) => {
   const { courseName } = req.query;
   try {
     const videos = await VideoModel.find({ 'courses.courseName': courseName });
