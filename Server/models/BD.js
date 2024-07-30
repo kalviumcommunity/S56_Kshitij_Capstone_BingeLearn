@@ -8,8 +8,9 @@ const UserSchema = mongoose.Schema({
 
 const TeachersSchema = mongoose.Schema({
     name: String,
-    email: String,
-    password: String
+    email: { type: String, required: true, unique: true},
+    password: String,
+    courseName: { type: String, required: false }
 })
 
 

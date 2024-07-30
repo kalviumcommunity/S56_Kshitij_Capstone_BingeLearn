@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar2 from "../Components/Navbar2";
+import axios from 'axios';
 import "../PagesTeach/PublishCourse.css";
-
 
 const PublishCourse = () => {
   const [thumbnailUploaded, setThumbnailUploaded] = useState(false);
+  const [courseName, setCourseName] = useState('');
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -28,7 +29,25 @@ const PublishCourse = () => {
       console.error("Error uploading thumbnail:", error);
     }
   };
-  
+
+  const saveCourseName = async () => {
+    const email = sessionStorage.getItem('email'); 
+
+    if (!email) {
+      console.error('Email not found in session storage');
+      return;
+    }
+
+    try {
+      const response = await axios.post('https://s56-kshitij-capstone-bingelearn.onrender.com/savecourse', {
+        email: email,
+        courseName: courseName,
+      });
+      console.log(response.data.message);
+    } catch (error) {
+      console.error('Error saving course name', error);
+    }
+  };
   return (
     <div>
       <Navbar2 />
@@ -36,7 +55,8 @@ const PublishCourse = () => {
         <div className="upperBoxP">
           <div className="upperLeftBoxP">
             <div className="upperUpperBoxP">
-              <input type="text" className="inputBoxP" placeholder="Name of the Course"></input>
+              <input type="text" className="inputBoxP" placeholder="Name of the Course" value={courseName}
+                onChange={(e) => setCourseName(e.target.value)}></input>
               <button className="saveButtonP">Save Course Name</button>
             </div>
             <div className="upperLowerBoxP">

@@ -112,6 +112,26 @@ router.post("/loginTeacher", async (req, res) => {
   }
 });
 
+router.post('/savecourse', async (req, res) => {
+  const { email, courseName } = req.body;
+
+  try {
+    const teacher = await TeachersModal.findOne({ email: email });
+    console.log(teacher)
+
+    if (teacher) {
+      teacher.courseName = courseName;
+      await teacher.save();
+      res.status(200).json({ message: 'Course name saved successfully!' });
+    } else {
+      res.status(404).json({ message: 'Teacher not found!' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+    console.log(err)
+  }
+});
+
 // Upload Route
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
