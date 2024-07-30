@@ -165,14 +165,27 @@ router.post('/savevideo', async (req, res) => {
 
 // Getting video details
 router.get('/videos', async (req, res) => {
-  const { courseName } = req.query;
+  const { email, courseName } = req.query;
   try {
-    const videos = await VideoModel.find({ 'courses.courseName': courseName });
-    res.json(videos);
+    // Find the teacher by email
+    const teacher = await TeachersModal.findOne({ email });
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
+    // Find the course by courseName in the teacher's courses array
+    const course = teacher.courses.find(course => course.courseName === courseName);
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+    // Extract video names
+    const videoNames = course.videos.map(video => video.name);
+    // Send the video names in the response
+    res.json(videoNames);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching videos', error });
   }
 });
+
 
 // Upload Route
 router.post('/upload', upload.single('image'), async (req, res) => {
