@@ -31,7 +31,7 @@ const PublishCourse = () => {
   };
 
   const saveCourseName = async () => {
-    const email = sessionStorage.getItem('email'); 
+    const email = sessionStorage.getItem('teacherEmail'); 
 
     if (!email) {
       console.error('Email not found in session storage');
@@ -57,7 +57,7 @@ const PublishCourse = () => {
             <div className="upperUpperBoxP">
               <input type="text" className="inputBoxP" placeholder="Name of the Course" value={courseName}
                 onChange={(e) => setCourseName(e.target.value)}></input>
-              <button className="saveButtonP">Save Course Name</button>
+              <button className="saveButtonP"  onClick={saveCourseName}>Save Course Name</button>
             </div>
             <div className="upperLowerBoxP">
             <div className="wrapper">
