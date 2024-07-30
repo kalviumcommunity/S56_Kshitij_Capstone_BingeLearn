@@ -163,6 +163,17 @@ router.post('/savevideo', async (req, res) => {
   }
 });
 
+// Getting video details
+app.get('/videos', async (req, res) => {
+  const { courseName } = req.query;
+  try {
+    const videos = await VideoModel.find({ 'courses.courseName': courseName });
+    res.json(videos);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching videos', error });
+  }
+});
+
 // Upload Route
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {

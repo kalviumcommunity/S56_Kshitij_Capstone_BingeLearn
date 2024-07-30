@@ -32,7 +32,6 @@
 }
 
 .upperRightBoxP{
-    /* border: 2px solid pink; */
     width: 34vw;
     height: 50vh;
     display: flex;
@@ -42,7 +41,6 @@
 }
 
 .lowerLeftBoxP{
-    /* border: 2px solid lightblue; */
     width: 100vw;
     height: 40vh;
     display: flex;
@@ -182,3 +180,18 @@
   color: white;
   cursor: pointer;
 }
+
+
+.inputBoxP.saved {
+  background-color: #e0e0e0; 
+  border: 1px solid #b0b0b0;
+  cursor: not-allowed; 
+}
+
+.saveButtonP.saved {
+  background-color: #d3d3d3; 
+  cursor: not-allowed;
+  color: green;
+}
+
+

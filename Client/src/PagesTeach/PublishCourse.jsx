@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar2 from "../Components/Navbar2";
 import axios from 'axios';
@@ -7,6 +7,37 @@ import "../PagesTeach/PublishCourse.css";
 const PublishCourse = () => {
   const [thumbnailUploaded, setThumbnailUploaded] = useState(false);
   const [courseName, setCourseName] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    // Check if a new user has logged in by comparing stored email with session email
+    const currentEmail = sessionStorage.getItem('teacherEmail');
+    const storedEmail = localStorage.getItem('lastUserEmail');
+
+    if (currentEmail !== storedEmail) {
+      sessionStorage.removeItem('courseName'); // Clear course name if different user
+      localStorage.setItem('lastUserEmail', currentEmail); // Update last logged-in user
+    }
+
+    const savedCourseName = sessionStorage.getItem('courseName');
+    if (savedCourseName) {
+      setCourseName(savedCourseName);
+      setSaved(true);
+      fetchVideos(savedCourseName); // Fetch videos when course name is set
+    }
+  }, []);
+
+  const fetchVideos = async (courseName) => {
+    try {
+      const response = await axios.get('https://s56-kshitij-capstone-bingelearn.onrender.com/videos', {
+        params: { courseName },
+      });
+      setVideos(response.data);
+    } catch (error) {
+      console.error('Error fetching videos', error);
+    }
+  };
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -45,10 +76,18 @@ const PublishCourse = () => {
       });
       console.log(response.data.message);
       sessionStorage.setItem('courseName', courseName);
+      setSaved(true);
     } catch (error) {
       console.error('Error saving course name', error);
     }
   };
+
+  const handleCourseNameChange = (e) => {
+    setCourseName(e.target.value);
+    sessionStorage.setItem('courseName', e.target.value);
+    setSaved(false);
+  };
+
   return (
     <div>
       <Navbar2 />
@@ -56,13 +95,25 @@ const PublishCourse = () => {
         <div className="upperBoxP">
           <div className="upperLeftBoxP">
             <div className="upperUpperBoxP">
-              <input type="text" className="inputBoxP" placeholder="Name of the Course" value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}></input>
-              <button className="saveButtonP"  onClick={saveCourseName}>Save Course Name</button>
+              <input
+                type="text"
+                className={`inputBoxP ${saved ? 'saved' : ''}`}
+                placeholder="Name of the Course"
+                value={courseName}
+                onChange={handleCourseNameChange}
+                disabled={saved} 
+              />
+              <button
+                className={`saveButtonP ${saved ? 'saved' : ''}`}
+                onClick={saveCourseName}
+                disabled={saved} 
+              >
+                {saved ? 'Saved' : 'Save Course Name'}
+              </button>
             </div>
             <div className="upperLowerBoxP">
-            <div className="wrapper">
-          <Link className="cta" to="/vidupload">
+              <div className="wrapper">
+                <Link className="cta" to="/vidupload">
             <span>Upload Video</span>
             <span>
               <svg
@@ -162,16 +213,15 @@ const PublishCourse = () => {
         {thumbnailUploaded && <p>Thumbnail Uploaded</p>}
         </div>
         <div className="lowerBoxP">
-          <div className="lowerLeftBoxP">
-            <div className="VideoHeadingP">
-            <h2>Uploaded Video's</h2>
+          {videos.map((video) => (
+            <div key={video._id} className="video-tile">
+              <video width="320" height="240" controls>
+                <source src={video.videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <p>{video.description}</p>
             </div>
-          </div>
-          <div className="lowerRightBoxP">
-            <div className="assignmentHeadingP">
-            <h2>Uploaded Assignment's</h2>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
