@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import Navbar2 from "../Components/Navbar2";
 import "../PagesTeach/VideoUpload.css";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const VideoUpload = () => {
   const [videoName, setVideoName] = useState('');
   const [videoLink, setVideoLink] = useState('');
   const [videoDuration, setVideoDuration] = useState('');
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleUpload = async (event) => {
     event.preventDefault();
@@ -30,6 +33,11 @@ const VideoUpload = () => {
       });
 
       console.log(response.data.message);
+      setUploadSuccess(true);
+      
+      setTimeout(() => {
+        navigate("/publish");
+      }, 2000);
     } catch (error) {
       console.error('Error saving video details', error);
     }
@@ -64,6 +72,11 @@ const VideoUpload = () => {
           />
           <button type="submit" className="button-confirm">Upload →</button>
         </form>
+        {uploadSuccess && (
+          <div className="success-message">
+            <p>Video uploaded successfully! Redirecting...</p>
+          </div>
+        )}
       </div>
     </div>
   );
