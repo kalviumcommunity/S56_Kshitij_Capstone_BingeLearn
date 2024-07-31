@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGooglePlusG } from '@fortawesome/free-brands-svg-icons';
@@ -15,6 +16,9 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false); 
+
+
+  const navigate = useNavigate();
 
   const RENDER_LINK = 'https://s56-kshitij-capstone-bingelearn.onrender.com';
 
@@ -154,8 +158,12 @@ const Login = () => {
         // Store email in session storage based on user type
         if (userType === 'teacher') {
           sessionStorage.setItem('teacherEmail', email);
+          sessionStorage.setItem('teacherName', userData.name); // Save teacher's name
+          navigate('/navigation'); // Redirect to Navigation page
         } else if (userType === 'student') {
           sessionStorage.setItem('studentEmail', email);
+          sessionStorage.setItem('studentName', userData.name); // Save student's name
+          navigate('/landing'); // Redirect to LandingStu page
         }
       } else {
         const errorData = await response.json();
@@ -171,10 +179,6 @@ const Login = () => {
     }
   };
 
-  // Redirect to Navigation component if isLoggedIn is true
-  if (isLoggedIn) {
-    return <Navigation />;
-  }
 
   return (
     <div className="center-align">

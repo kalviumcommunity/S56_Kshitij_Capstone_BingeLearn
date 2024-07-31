@@ -213,4 +213,42 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+
+
+// Route to get user name by email
+router.get('/getUserName', async (req, res) => {
+  const { email } = req.query;
+  try {
+    // Find the user by email
+    const user = await UserModal.findOne({email: email});
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Send the user's name in the response
+    res.json({ name: user.name });
+  } catch (error) {
+    console.error('Error fetching user name:', error);
+    res.status(500).json({ message: 'Error fetching user name', error });
+  }
+});
+
+
+// Route to get all the courses along with their Course makers
+router.get('/getAllCourses', async (req, res) => {
+  try {
+    const teachers = await TeachersModal.find({}, 'name courses');
+    const courses = teachers.flatMap(teacher =>
+      teacher.courses.map(course => ({
+        courseName: course.courseName,
+        teacherName: teacher.name,
+      }))
+    );
+    res.json(courses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    res.status(500).json({ message: 'Error fetching courses', error });
+  }
+});
 module.exports = { router };
