@@ -213,4 +213,26 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+
+
+// Route to get user name by email
+router.get('/getUserName', async (req, res) => {
+  const { email } = req.query;
+  try {
+    // Find the user by email
+    const user = await UserModal.findOne({email: email});
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Send the user's name in the response
+    res.json({ name: user.name });
+  } catch (error) {
+    console.error('Error fetching user name:', error);
+    res.status(500).json({ message: 'Error fetching user name', error });
+  }
+});
+
+
 module.exports = { router };
