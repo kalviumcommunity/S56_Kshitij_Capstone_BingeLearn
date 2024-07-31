@@ -235,4 +235,20 @@ router.get('/getUserName', async (req, res) => {
 });
 
 
+// Route to get all the courses along with their Course makers
+router.get('/getAllCourses', async (req, res) => {
+  try {
+    const teachers = await TeachersModal.find({}, 'name courses');
+    const courses = teachers.flatMap(teacher =>
+      teacher.courses.map(course => ({
+        courseName: course.courseName,
+        teacherName: teacher.name,
+      }))
+    );
+    res.json(courses);
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    res.status(500).json({ message: 'Error fetching courses', error });
+  }
+});
 module.exports = { router };
